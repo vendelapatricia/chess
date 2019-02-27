@@ -1,0 +1,50 @@
+<DOCTYPE html>
+  <html>
+  <script>
+
+  function chessBoard(cell) { // cell visar att funktionen behöver ett värde i sig
+    var possibleMoves = []; // skapar en tom array som jag senare fyller
+    var mark = ["A","B", "C", "D", "E", "F", "G", "H"]; // skapar array med bokstäver
+    var x = mark.indexOf(cell[0]); //// indexOf läser av vad vi har skrivit in för värde på cell i funktionen
+    var y = parseInt(cell[1]); //// gör om så att värdet vi skriver blir en int
+
+    // detta skapar reglerna för hur hästen kan flytta sig horisontellt
+    var row = [
+      x + 2,
+      x - 2,
+      x + 1,
+      x - 1].filter(function(cellPosition) { // filtrerar bort element som inte passar in
+        return (cellPosition > 0 && cellPosition < 9); // returnerar positioner som är större än 0 och mindre än 9, alltså 1-8
+      })
+
+      // detta skapar reglerna för hur hästen kan röra sig vertikalt
+      var column = [
+        y + 2,
+        y - 2,
+        y + 1,
+        y - 1].filter(function(cellPosition) {
+          return (cellPosition > 0 && cellPosition < 9);
+        })
+
+        /*Här går funktionen igenom arrayerna row och column startar på
+        0 och går igenom hela längden av arrayerna.
+        För att man ska kunna flytta hästen får inte värdet på x & y tillsammans
+        överstiga 3. Detta kollar if-satsen genom att ta dom olika arrayerna och plussa ihop dom.
+        */
+        for (var i = 0; i < row.length; i++) {//går igenom hela row arrayen och ökar med en för varje varv
+          for (var j = 0; j < column.length; j++) {  // går igenom hela column arrayen och ökar ett för varje varv
+            if (Math.abs(x - row[i]) + Math.abs(y - column[j]) === 3) { // math.abs skapar ett absolut värde
+              console.log("Possible moves: "+ mark[row[i]]+column[j]); // gör att siffran som representerar plats för arrayen row omvandlas till motsvarande bokstav i mark arrayen
+              if (!possibleMoves.includes([row[i], column[j]])) {
+                possibleMoves.push([row[i], column[j]]); // pushar in dom möjliga dragen till till possibleMoves arrayen
+              }
+            }
+          }
+        }
+        return possibleMoves.length;
+        // returnerar hur många platser/värden som vi "pushat in" i possibleMoves, vilket representerar hur många möjliga drag vi har
+      }
+
+    </script>
+
+    </html>
